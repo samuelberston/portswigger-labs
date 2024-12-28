@@ -45,3 +45,4 @@ function handleResponse() {
     changeReq.send('csrf='+token+'&email=test@test.com')
 };
 </script>
+
