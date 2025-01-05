@@ -38,7 +38,7 @@ We can exploit the iframe sandbox attribute to bypass this by assigning it to th
 </iframe>
 ```
 
-- Exploiting clickjacking vulnerability to trigger DOM-based XSS
+## Exploiting clickjacking vulnerability to trigger DOM-based XSS
   - Exploiting the sink in which the feedback form renders the name input without sanitization to inject an img tag which calls onprint. The URL has the hash #feedbackResult to position the screen futher down for the clickjacking overlay.
 ```
 <style>
