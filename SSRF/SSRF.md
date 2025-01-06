@@ -1,0 +1,1 @@
+- SSRF against the local server by changing an API to the localhost/admin/delete?username=user
